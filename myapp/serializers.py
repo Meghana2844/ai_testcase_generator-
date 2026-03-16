@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Project, SourceCode, TestCase
+from .models import ContactMessage, Project, SourceCode, TestCase
 
 class TestCaseSerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,3 +19,8 @@ class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = ['id', 'project_name', 'description', 'created_at', 'source_codes']
+
+class ContactMessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContactMessage
+        fields = "__all__"
