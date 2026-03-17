@@ -4,23 +4,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from .services import AIService
-from .models import ContactMessage, Project, SourceCode
-from .serializers import ContactMessageSerializer, ProjectSerializer, SourceCodeSerializer
-
-
-
-
-class ProjectViewSet(viewsets.ModelViewSet):
-    serializer_class = ProjectSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        return Project.objects.filter(user=self.request.user)
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
-
+from .models import ContactMessage, SourceCode
+from .serializers import ContactMessageSerializer, SourceCodeSerializer
 
 
 class SourceCodeViewSet(viewsets.ModelViewSet):
@@ -28,7 +13,7 @@ class SourceCodeViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return SourceCode.objects.filter(project__user=self.request.user)
+        return SourceCode.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
         source_code = serializer.save()

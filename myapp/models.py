@@ -1,24 +1,16 @@
 from django.db import models
 from django.conf import settings
 
-class Project(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='projects')
-    project_name = models.CharField(max_length=255)
-    description = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.project_name
 
 class SourceCode(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='source_codes')
-    file_name = models.CharField(max_length=255)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='source_codes')
     language = models.CharField(max_length=50)
     code_text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.file_name} ({self.language})"
+        return f"{self.user} ({self.language})"
 
 class TestCase(models.Model):
     source_code = models.ForeignKey(SourceCode, on_delete=models.CASCADE, related_name='test_cases')
