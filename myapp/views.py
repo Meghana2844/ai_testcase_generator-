@@ -16,6 +16,7 @@ class SourceCodeViewSet(viewsets.ModelViewSet):
         return SourceCode.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
         source_code = serializer.save()
         source_code.refresh_from_db()
 
