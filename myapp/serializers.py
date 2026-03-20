@@ -11,7 +11,8 @@ class SourceCodeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SourceCode
-        fields = ['id', 'user', 'language', 'code_text', 'test_cases']
+        fields = ['id', 'language', 'code_text', 'test_cases']
+        read_only_fields= ['user']
 
 
 class ContactMessageSerializer(serializers.ModelSerializer):
