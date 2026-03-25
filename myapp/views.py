@@ -13,16 +13,28 @@ class SourceCodeViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return SourceCode.objects.filter(user=self.request.user)
+        return SourceCode.objects.filter(user=self.request.user).order_by('created_at')
 
-    def perform_create(self, serializer):
-        source_code = serializer.save(user=self.request.user)
-        source_code.refresh_from_db()
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+       
+        source_code = serializer.save(user=request.user)
 
         try:
+            # ✅ Generate & store test cases
             AIService.generate_and_store(source_code)
         except Exception as e:
             print(f"AI Error: {e}")
+
+        # ✅ Refresh to get test cases
+        source_code.refresh_from_db()
+
+        # ✅ Return updated data (with test cases)
+        response_serializer = self.get_serializer(source_code)
+
+        return Response(response_serializer.data)
 
 
 
@@ -50,7 +62,7 @@ class GenerateTestCasesView(APIView):
                 {"error": str(e)},
                 status=500
             )
-        
+    
 
 
 

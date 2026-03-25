@@ -9,4 +9,4 @@ router.register(r'contact-messages', ContactMessageViewSet, basename='contactmes
 urlpatterns = [
     path('', include(router.urls)),
     path('generate-testcases/', GenerateTestCasesView.as_view(), name='generate-testcases'),
-]
+] 
