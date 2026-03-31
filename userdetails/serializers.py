@@ -1,7 +1,8 @@
 from rest_framework import serializers
-from .models import User
+from django.contrib.auth import get_user_model
 
-# Serializer for viewing user info (safe data)
+User = get_user_model()
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -23,3 +24,13 @@ class RegisterSerializer(serializers.ModelSerializer):
             password=validated_data['password']
         )
         return user
+    
+from rest_framework import serializers
+
+class SendOTPSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+class VerifyOTPSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    otp = serializers.CharField(max_length=6)
+    password = serializers.CharField(min_length=6)
