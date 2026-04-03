@@ -4,6 +4,13 @@ from .models import User
 from .serializers import UserSerializer, RegisterSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from django.contrib.auth import get_user_model
+from django.core.mail import send_mail
+from .models import PasswordResetOTP
+from .utils import generate_otp
+from .serializers import SendOTPSerializer, VerifyOTPSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -26,13 +33,6 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(request.user)
         return Response(serializer.data)
     
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from django.contrib.auth import get_user_model
-from django.core.mail import send_mail
-from .models import PasswordResetOTP
-from .utils import generate_otp
-from .serializers import SendOTPSerializer, VerifyOTPSerializer
 
 user = get_user_model()
 
@@ -98,3 +98,4 @@ class VerifyOTPView(APIView):
         user.save()
 
         return Response({"message": "Password reset successful"})
+
