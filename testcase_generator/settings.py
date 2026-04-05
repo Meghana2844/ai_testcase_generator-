@@ -51,9 +51,8 @@ INSTALLED_APPS = [
     
 ]
 
-MIDDLEWARE = [
     
-   MIDDLEWARE = [
+MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -66,7 +65,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-]
+
 
 ROOT_URLCONF = 'testcase_generator.urls'
 
