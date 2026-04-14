@@ -84,13 +84,10 @@ For each test case provide:
 
     @staticmethod
     def generate_and_store(source_code_obj):
-        """
-        Used by dashboard when user generates test cases.
-        Stores results in database.
-        """
+ 
 
         try:
-            test_cases, generation_time = AIService._generate(
+            test_cases, _ = AIService._generate(
                 source_code_obj.code_text,
                 source_code_obj.language
             )
